@@ -11,6 +11,8 @@ const picturesMarkup = galleryItems
   .join("");
 galleryArrRef.insertAdjacentHTML("afterbegin", picturesMarkup);
 
+// basicLightbox library event
+
 galleryArrRef.addEventListener("click", selectedPict);
 
 function selectedPict(event) {
@@ -20,14 +22,21 @@ function selectedPict(event) {
     return;
   }
   const selectedPict = event.target.dataset.source;
-  const instance = basicLightbox
-    .create(
-      `
+  const instance = basicLightbox.create(
+    `
     <img src="${selectedPict}" width="800" height="600">
 `
-    )
-    .show();
-  //   instance.show();
+  );
+  // .show();
+  instance.show();
+
+  //====close modal window after using the Esc button====
+  window.addEventListener("keydown", (event) => {
+    //   console.log("keydown", event);
+    if (event.key === "Escape") {
+      instance.close(); //!!! it's not work with only .show()->without "instance"  -> look at lines 30 and 31
+    }
+  });
 }
 
 // console.log(galleryArrRef);
